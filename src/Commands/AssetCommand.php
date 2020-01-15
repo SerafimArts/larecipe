@@ -36,19 +36,19 @@ class AssetCommand extends Command
             return;
         }
 
-        (new Filesystem)->copyDirectory(
-            __DIR__.'/../../stubs/asset-stubs',
+        (new Filesystem())->copyDirectory(
+            __DIR__ . '/../../stubs/asset-stubs',
             $this->assetPath()
         );
 
         // AssetServiceProvider.php replacements...
-        $this->replace('{{ namespace }}', $this->assetNamespace(), $this->assetPath().'/src/AssetServiceProvider.stub');
-        $this->replace('{{ component }}', $this->assetName(), $this->assetPath().'/src/AssetServiceProvider.stub');
-        $this->replace('{{ name }}', $this->assetName(), $this->assetPath().'/src/AssetServiceProvider.stub');
+        $this->replace('{{ namespace }}', $this->assetNamespace(), $this->assetPath() . '/src/AssetServiceProvider.stub');
+        $this->replace('{{ component }}', $this->assetName(), $this->assetPath() . '/src/AssetServiceProvider.stub');
+        $this->replace('{{ name }}', $this->assetName(), $this->assetPath() . '/src/AssetServiceProvider.stub');
 
         // Asset composer.json replacements...
-        $this->replace('{{ name }}', $this->argument('name'), $this->assetPath().'/composer.json');
-        $this->replace('{{ escapedNamespace }}', $this->escapedAssetNamespace(), $this->assetPath().'/composer.json');
+        $this->replace('{{ name }}', $this->argument('name'), $this->assetPath() . '/composer.json');
+        $this->replace('{{ escapedNamespace }}', $this->escapedAssetNamespace(), $this->assetPath() . '/composer.json');
 
         // Rename the stubs with the proper file extensions...
         $this->renameStubs();
@@ -83,7 +83,7 @@ class AssetCommand extends Command
     protected function stubsToRename()
     {
         return [
-            $this->assetPath().'/src/AssetServiceProvider.stub',
+            $this->assetPath() . '/src/AssetServiceProvider.stub',
         ];
     }
 
@@ -98,7 +98,7 @@ class AssetCommand extends Command
 
         $composer['repositories'][] = [
             'type' => 'path',
-            'url' => './'.$this->relativeAssetPath(),
+            'url' => './' . $this->relativeAssetPath(),
         ];
 
         file_put_contents(
@@ -133,8 +133,8 @@ class AssetCommand extends Command
     {
         $package = json_decode(file_get_contents(base_path('package.json')), true);
 
-        $package['scripts']['build-'.$this->assetName()] = 'cd '.$this->relativeAssetPath().' && npm run dev';
-        $package['scripts']['build-'.$this->assetName().'-prod'] = 'cd '.$this->relativeAssetPath().' && npm run prod';
+        $package['scripts']['build-' . $this->assetName()] = 'cd ' . $this->relativeAssetPath() . ' && npm run dev';
+        $package['scripts']['build-' . $this->assetName() . '-prod'] = 'cd ' . $this->relativeAssetPath() . ' && npm run prod';
 
         file_put_contents(
             base_path('package.json'),
@@ -202,7 +202,7 @@ class AssetCommand extends Command
      */
     protected function relativeAssetPath()
     {
-        return config('larecipe.packages.path', 'larecipe-components').'/'.$this->assetClass();
+        return config('larecipe.packages.path', 'larecipe-components') . '/' . $this->assetClass();
     }
 
     /**
@@ -212,7 +212,7 @@ class AssetCommand extends Command
      */
     protected function assetNamespace()
     {
-        return Str::studly($this->assetVendor()).'\\'.$this->assetClass();
+        return Str::studly($this->assetVendor()) . '\\' . $this->assetClass();
     }
 
     /**
@@ -281,7 +281,7 @@ class AssetCommand extends Command
     protected function renameStubs()
     {
         foreach ($this->stubsToRename() as $stub) {
-            (new Filesystem)->move($stub, str_replace('.stub', '.php', $stub));
+            (new Filesystem())->move($stub, str_replace('.stub', '.php', $stub));
         }
     }
 }

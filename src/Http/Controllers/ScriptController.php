@@ -15,7 +15,8 @@ class ScriptController extends Controller
     {
         return response(
             file_get_contents(LaRecipe::allScripts()[$request->script]),
-            200, ['Content-Type' => 'application/javascript']
+            200,
+            ['Content-Type' => 'application/javascript']
         );
     }
 }

@@ -49,34 +49,34 @@ class GenerateDocumentationCommand extends Command
     {
         $publishedVersions = config('larecipe.versions.published');
 
-        $this->info('Reading all docs versions, found: '.implode(',', $publishedVersions));
+        $this->info('Reading all docs versions, found: ' . implode(',', $publishedVersions));
         foreach ($publishedVersions as $version) {
-            $versionDirectory = config('larecipe.docs.path').'/'.$version;
+            $versionDirectory = config('larecipe.docs.path') . '/' . $version;
 
             $this->line('');
-            $this->info('---------------- Version '.$version.' ----------------');
+            $this->info('---------------- Version ' . $version . ' ----------------');
             // check if the version directory not exists => create one
             if ($this->createVersionDirectory(base_path($versionDirectory))) {
-                $this->line('Docs folder created for v'.$version.' under '.$versionDirectory);
+                $this->line('Docs folder created for v' . $version . ' under ' . $versionDirectory);
             } else {
-                $this->line('Docs folder for <info>v'.$version.'</info> already exists.');
+                $this->line('Docs folder for <info>v' . $version . '</info> already exists.');
             }
 
             // check if the version index.md not exists => create one
             if ($this->createVersionIndex(base_path($versionDirectory))) {
-                $this->line('index.md created under '.$versionDirectory);
+                $this->line('index.md created under ' . $versionDirectory);
             } else {
-                $this->line('<info>index.md</info> for <info>v'.$version.'</info> already exists.');
+                $this->line('<info>index.md</info> for <info>v' . $version . '</info> already exists.');
             }
 
             // // check if the version landing page not exists => create one
             if ($this->createVersionLanding(base_path($versionDirectory))) {
-                $this->line(config('larecipe.docs.landing').'.md created under '.$versionDirectory);
+                $this->line(config('larecipe.docs.landing') . '.md created under ' . $versionDirectory);
             } else {
-                $this->line('<info>'.config('larecipe.docs.landing').'.md</info> for <info>v'.$version.'</info> already exists.');
+                $this->line('<info>' . config('larecipe.docs.landing') . '.md</info> for <info>v' . $version . '</info> already exists.');
             }
 
-            $this->info('--------------- /Version '.$version.' ----------------');
+            $this->info('--------------- /Version ' . $version . ' ----------------');
             $this->line('');
         }
         $this->info('Done.');
@@ -107,7 +107,7 @@ class GenerateDocumentationCommand extends Command
      */
     protected function createVersionIndex($versionDirectory)
     {
-        $indexPath = $versionDirectory.'/index.md';
+        $indexPath = $versionDirectory . '/index.md';
 
         if (! $this->filesystem->exists($indexPath)) {
             $content = $this->generateIndexContent($this->getStub('index'));
@@ -128,7 +128,7 @@ class GenerateDocumentationCommand extends Command
      */
     protected function createVersionLanding($versionDirectory)
     {
-        $landingPath = $versionDirectory.'/'.config('larecipe.docs.landing').'.md';
+        $landingPath = $versionDirectory . '/' . config('larecipe.docs.landing') . '.md';
 
         if (! $this->filesystem->exists($landingPath)) {
             $content = $this->generateLandingContent($this->getStub('landing'));
@@ -185,6 +185,6 @@ class GenerateDocumentationCommand extends Command
      */
     protected function getStub($stub)
     {
-        return $this->filesystem->get(base_path('/vendor/binarytorch/larecipe/stubs/'.$stub.'.stub'));
+        return $this->filesystem->get(base_path('/vendor/binarytorch/larecipe/stubs/' . $stub . '.stub'));
     }
 }

@@ -22,7 +22,7 @@ trait HasBladeParser
         extract($data, EXTR_SKIP);
 
         try {
-            eval('?'.'>'.$content);
+            eval('?' . '>' . $content);
         } catch (\Exception $e) {
             while (ob_get_level() > $obLevel) {
                 ob_end_clean();

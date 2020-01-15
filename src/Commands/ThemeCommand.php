@@ -37,24 +37,24 @@ class ThemeCommand extends Command
         }
 
         if ($this->option('remove')) {
-          $this->removeTheme();
-          $this->info('Successfully removed LaRecipe theme.');
-          return;
+            $this->removeTheme();
+            $this->info('Successfully removed LaRecipe theme.');
+            return;
         }
 
-        (new Filesystem)->copyDirectory(
-            __DIR__.'/../../stubs/theme-stubs',
+        (new Filesystem())->copyDirectory(
+            __DIR__ . '/../../stubs/theme-stubs',
             $this->themePath()
         );
 
         // ThemeServiceProvider.php replacements...
-        $this->replace('{{ namespace }}', $this->themeNamespace(), $this->themePath().'/src/ThemeServiceProvider.stub');
-        $this->replace('{{ component }}', $this->themeName(), $this->themePath().'/src/ThemeServiceProvider.stub');
-        $this->replace('{{ name }}', $this->themeName(), $this->themePath().'/src/ThemeServiceProvider.stub');
+        $this->replace('{{ namespace }}', $this->themeNamespace(), $this->themePath() . '/src/ThemeServiceProvider.stub');
+        $this->replace('{{ component }}', $this->themeName(), $this->themePath() . '/src/ThemeServiceProvider.stub');
+        $this->replace('{{ name }}', $this->themeName(), $this->themePath() . '/src/ThemeServiceProvider.stub');
 
         // Theme composer.json replacements...
-        $this->replace('{{ name }}', $this->argument('name'), $this->themePath().'/composer.json');
-        $this->replace('{{ escapedNamespace }}', $this->escapedThemeNamespace(), $this->themePath().'/composer.json');
+        $this->replace('{{ name }}', $this->argument('name'), $this->themePath() . '/composer.json');
+        $this->replace('{{ escapedNamespace }}', $this->escapedThemeNamespace(), $this->themePath() . '/composer.json');
 
         // Rename the stubs with the proper file extensions...
         $this->renameStubs();
@@ -76,7 +76,7 @@ class ThemeCommand extends Command
     protected function stubsToRename()
     {
         return [
-            $this->themePath().'/src/ThemeServiceProvider.stub',
+            $this->themePath() . '/src/ThemeServiceProvider.stub',
         ];
     }
 
@@ -91,7 +91,7 @@ class ThemeCommand extends Command
 
         $composer['repositories'][] = [
             'type' => 'path',
-            'url' => './'.$this->relativeThemePath(),
+            'url' => './' . $this->relativeThemePath(),
         ];
 
         file_put_contents(
@@ -157,7 +157,7 @@ class ThemeCommand extends Command
      */
     protected function relativeThemePath()
     {
-        return config('larecipe.packages.path', 'larecipe-components').'/'.$this->themeClass();
+        return config('larecipe.packages.path', 'larecipe-components') . '/' . $this->themeClass();
     }
 
     /**
@@ -167,7 +167,7 @@ class ThemeCommand extends Command
      */
     protected function themeNamespace()
     {
-        return Str::studly($this->themeVendor()).'\\'.$this->themeClass();
+        return Str::studly($this->themeVendor()) . '\\' . $this->themeClass();
     }
 
     /**
@@ -236,7 +236,7 @@ class ThemeCommand extends Command
     protected function renameStubs()
     {
         foreach ($this->stubsToRename() as $stub) {
-            (new Filesystem)->move($stub, str_replace('.stub', '.php', $stub));
+            (new Filesystem())->move($stub, str_replace('.stub', '.php', $stub));
         }
     }
 
@@ -247,7 +247,7 @@ class ThemeCommand extends Command
      */
     protected function removeTheme()
     {
-      $this->runProcess('composer remove '.$this->argument('name'), getcwd());
-      (new Filesystem)->deleteDirectory($this->themePath());
+        $this->runProcess('composer remove ' . $this->argument('name'), getcwd());
+        (new Filesystem())->deleteDirectory($this->themePath());
     }
 }

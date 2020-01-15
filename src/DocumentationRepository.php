@@ -9,7 +9,8 @@ use BinaryTorch\LaRecipe\Traits\HasDocumentationAttributes;
 
 class DocumentationRepository
 {
-    use HasAttributes, HasDocumentationAttributes;
+    use HasAttributes;
+    use HasDocumentationAttributes;
 
     /**
      * The documentation model.
@@ -47,7 +48,7 @@ class DocumentationRepository
 
         $this->content = $this->documentation->get($version, $this->sectionPage, $data);
 
-        if (is_null($this->content)) {
+        if ($this->content === null) {
             return $this->prepareNotFound();
         }
 

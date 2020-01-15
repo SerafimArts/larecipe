@@ -13,6 +13,6 @@ trait HasMarkdownParser
      */
     public function parse($text)
     {
-        return (new ParsedownExtra)->text($text);
+        return (new ParsedownExtra())->text($text);
     }
 }

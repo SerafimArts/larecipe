@@ -82,7 +82,7 @@ class ShowDocumentationTest extends TestCase
     /** @test */
     public function only_authorized_users_can_access_viewLarecipe_gate_is_defined()
     {
-        Gate::define('viewLarecipe', function($user, $documentation) {
+        Gate::define('viewLarecipe', function ($user, $documentation) {
             return false;
         });
 

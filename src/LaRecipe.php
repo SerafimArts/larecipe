@@ -39,7 +39,7 @@ class LaRecipe
     {
         static::$scripts[$name] = $path;
 
-        return new static;
+        return new static();
     }
 
     /**
@@ -53,7 +53,7 @@ class LaRecipe
     {
         static::$styles[$name] = $path;
 
-        return new static;
+        return new static();
     }
 
     /**

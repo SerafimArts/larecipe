@@ -21,12 +21,11 @@ class SearchController extends Controller
 
         if (config('larecipe.settings.auth')) {
             $this->middleware(['auth']);
-        }else{
-            if(config('larecipe.settings.middleware')){
+        } else {
+            if (config('larecipe.settings.middleware')) {
                 $this->middleware(config('larecipe.settings.middleware'));
             }
         }
-
     }
 
     /**
@@ -53,8 +52,9 @@ class SearchController extends Controller
             $this->documentationRepository->isNotPublishedVersion($version)
             ||
             config('larecipe.search.default') != 'internal'
-            || 
-            ! config('larecipe.search.enabled')
-        , 403);
+            ||
+            ! config('larecipe.search.enabled'),
+            403
+        );
     }
 }

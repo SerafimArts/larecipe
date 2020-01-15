@@ -15,7 +15,8 @@ class StyleController extends Controller
     {
         return response(
             file_get_contents(LaRecipe::allStyles()[$request->style]),
-            200, ['Content-Type' => 'text/css']
+            200,
+            ['Content-Type' => 'text/css']
         );
     }
 }

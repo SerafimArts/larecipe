@@ -14,7 +14,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
         
         $this->app->setBasePath(__DIR__ . '/../');
 
-        $this->app['router']->get('login', function () { return 'login'; })->name('login');
+        $this->app['router']->get('login', function () {
+            return 'login';
+        })->name('login');
     }
 
     /**

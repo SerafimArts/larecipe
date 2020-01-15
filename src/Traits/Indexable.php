@@ -16,12 +16,13 @@ trait Indexable
             $pages = $this->getPages($version);
 
             $result = [];
-            foreach($pages as $page) {
+            foreach ($pages as $page) {
                 $page = explode("{{version}}", $page)[1];
                 $pageContent = $this->get($version, $page);
 
-                if(! $pageContent)
+                if (! $pageContent) {
                     continue;
+                }
 
                 $indexableNodes = implode(',', config('larecipe.search.engines.internal.index'));
                 
@@ -45,7 +46,7 @@ trait Indexable
             }
 
             return $result;
-        }, 'larecipe.docs.'.$version.'.search');
+        }, 'larecipe.docs.' . $version . '.search');
     }
 
     /**
@@ -54,7 +55,7 @@ trait Indexable
      */
     protected function getPages($version)
     {
-        $path = base_path(config('larecipe.docs.path').'/'.$version.'/index.md');
+        $path = base_path(config('larecipe.docs.path') . '/' . $version . '/index.md');
 
         // match all markdown urls => [title](url)
         preg_match_all('/\(([^)]+)\)/', $this->files->get($path), $matches);

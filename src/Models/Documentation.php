@@ -10,7 +10,9 @@ use BinaryTorch\LaRecipe\Traits\HasMarkdownParser;
 
 class Documentation
 {
-    use HasMarkdownParser, HasBladeParser, Indexable;
+    use HasMarkdownParser;
+    use HasBladeParser;
+    use Indexable;
 
     /**
      * The filesystem implementation.
@@ -46,8 +48,8 @@ class Documentation
      */
     public function getIndex($version)
     {
-        return $this->cache->remember(function() use($version) {
-            $path = base_path(config('larecipe.docs.path').'/'.$version.'/index.md');
+        return $this->cache->remember(function () use ($version) {
+            $path = base_path(config('larecipe.docs.path') . '/' . $version . '/index.md');
 
             if ($this->files->exists($path)) {
                 $parsedContent = $this->parse($this->files->get($path));
@@ -56,7 +58,7 @@ class Documentation
             }
 
             return null;
-        }, 'larecipe.docs.'.$version.'.index');
+        }, 'larecipe.docs.' . $version . '.index');
     }
 
     /**
@@ -69,8 +71,8 @@ class Documentation
      */
     public function get($version, $page, $data = [])
     {
-        return $this->cache->remember(function() use($version, $page, $data) {
-            $path = base_path(config('larecipe.docs.path').'/'.$version.'/'.$page.'.md');
+        return $this->cache->remember(function () use ($version, $page, $data) {
+            $path = base_path(config('larecipe.docs.path') . '/' . $version . '/' . $page . '.md');
 
             if ($this->files->exists($path)) {
                 $parsedContent = $this->parse($this->files->get($path));
@@ -81,7 +83,7 @@ class Documentation
             }
 
             return null;
-        }, 'larecipe.docs.'.$version.'.'.$page);
+        }, 'larecipe.docs.' . $version . '.' . $page);
     }
 
     /**
@@ -97,7 +99,7 @@ class Documentation
 
         $content = str_replace('{{route}}', trim(config('larecipe.docs.route'), '/'), $content);
 
-        $content = str_replace('"#', '"'.request()->getRequestUri().'#', $content);
+        $content = str_replace('"#', '"' . request()->getRequestUri() . '#', $content);
 
         return $content;
     }
@@ -112,7 +114,7 @@ class Documentation
     public function sectionExists($version, $page)
     {
         return $this->files->exists(
-            base_path(config('larecipe.docs.path').'/'.$version.'/'.$page.'.md')
+            base_path(config('larecipe.docs.path') . '/' . $version . '/' . $page . '.md')
         );
     }
 }

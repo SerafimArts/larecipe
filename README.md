@@ -23,6 +23,14 @@
 
 # LaRecipe 🍪
 
+**Note**: This is fork of [official repository](https://github.com/saleem-hadad/larecipe) with
+PHP 7.4 support, created by [@drjdr](https://github.com/drjdr).
+
+Features:
+ - PSR-12 support
+ - PHP 7.4 support
+ - `symfony/dom-crawler` 5.x dependency are allowed.
+
 **LaRecipe** is simply a code-driven package provides an easy way to create beautiful documentation for your product or application inside your Laravel app.
 
 ![LaRecipe Screenshot](https://larecipe.binarytorch.com.my/images/screenshot.png#)
@@ -40,7 +48,7 @@
 
 ☝️ Install the package via composer.
 
-    composer require binarytorch/larecipe
+    composer require serafim/larecipe
 
 ✌️ Run the install command.
 
